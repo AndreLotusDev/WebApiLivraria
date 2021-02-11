@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace WebApiLivraria.Repository
 {
@@ -11,5 +12,6 @@ namespace WebApiLivraria.Repository
         void Add(T entity);
         void Update(T entity);
         void Delete(T entity);
+        Task<(int, bool, string)> SaveAsync();
     }
 }

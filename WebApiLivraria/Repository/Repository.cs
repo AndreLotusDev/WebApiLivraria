@@ -2,6 +2,7 @@
 using System;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 using WebApiLivraria.Data;
 
 namespace WebApiLivraria.Repository
@@ -37,6 +38,35 @@ namespace WebApiLivraria.Repository
         public void Update(T entity)
         {
             _context.Set<T>().Update(entity);
+        }
+
+        //Numero de rows afetadas, se salvou, mensagem de erro
+        public async Task<(int, bool, string)> SaveAsync()
+        {
+            using var transaction = _context.Database.BeginTransaction();
+            try
+            {
+                var save = await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                return (save, true, "Operação realizada com sucesso");
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                await transaction.RollbackAsync();
+
+                return (0, false, $"O logging nao pode rastrear corretamente as alterações :{ex.Message}");
+            }
+            catch (DbUpdateException ex)
+            {
+                await transaction.RollbackAsync();
+
+                return (0, false, $"Error: {ex.Message}");
+            }
+            finally
+            {
+                await transaction.DisposeAsync();
+            }
         }
     }
 }

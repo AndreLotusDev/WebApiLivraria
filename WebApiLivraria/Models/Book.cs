@@ -13,8 +13,9 @@ namespace WebApiLivraria.Models
         public string Description { get; set; }
         public List<string> Categories{ get; set; }
         public int Pages { get; set; }
-        public DateTime Year { get; set; }
-        public string File { get; set; }
+        public Int16 Year { get; set; }
+        public string FileUrl { get; set; }
+        public string ImageUrl { get; set; }
 
         //Loggins -> Quem postou (Futuramente)
     }
