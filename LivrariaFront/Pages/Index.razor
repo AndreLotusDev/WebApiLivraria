@@ -1,0 +1,28 @@
+﻿@page "/"
+@inject HttpClient http
+@inject IJSRuntime jsRuntime
+
+@using System.Text.Json;
+@using System.Text.Json.Serialization;
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+<button @onclick="CarregarProdutos">Get Books -</button>
+
+<ul>
+</ul>
+
+@code{
+    protected async Task<List<Book>> CarregarProdutos()
+    {
+        var url = Singleton.UrlApiBase + "/Book";
+
+        var books = await http.GetFromJsonAsync<List<Book>>(url);
+
+        return books;
+    }
+}

@@ -1,18 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 using WebApiLivraria.Data;
+using WebApiLivraria.Helpers;
 using WebApiLivraria.Repository;
 
 namespace WebApiLivraria
@@ -35,31 +31,34 @@ namespace WebApiLivraria
                     options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection"))
             );
 
-            services.AddIdentity<UsuarioContext, IdentityRole>(options => options.Stores.MaxLengthForKeys = 128)
-             .AddEntityFrameworkStores<ApplicationContext>()
-             .AddDefaultTokenProviders();
-
             services.AddScoped<IUnityOfWork, UnityOfWork>();
 
-            services.Configure<IdentityOptions>(options =>
+            services.AddCors();
+
+            var key = Encoding.ASCII.GetBytes(Settings.SecretKey);
+            services.AddAuthentication(x =>
             {
-                // Password settings
-                options.Password.RequireDigit = false;
-                options.Password.RequiredLength = 3;
-                options.Password.RequireNonAlphanumeric = false;
-                options.Password.RequireUppercase = false;
-                options.Password.RequireLowercase = false;
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }
+            ).AddJwtBearer(x =>
+            {
+                x.RequireHttpsMetadata = false;
+                x.SaveToken = true;
 
-                // Lockout settings
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-                options.Lockout.MaxFailedAccessAttempts = 10;
+                //Caso ele logue errado
+                //x.Events = new JwtBearerEvents 
+                //{ 
+                    
+                //}
 
-                // User settings
-
-                // User settings.
-                options.User.AllowedUserNameCharacters =
-                    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ ";
-                options.User.RequireUniqueEmail = true;
+                x.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
             });
         }
 
@@ -70,6 +69,8 @@ namespace WebApiLivraria
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(option => option.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod()); ;
 
             app.UseHttpsRedirection();
 

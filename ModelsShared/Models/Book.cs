@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebApiLivraria.Models
+namespace ModelsShared.Models
 {
     public class Book
     {

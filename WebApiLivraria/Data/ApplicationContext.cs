@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using WebApiLivraria.Models;
+using ModelsShared.Models;
 
 namespace WebApiLivraria.Data
 {
@@ -13,6 +13,7 @@ namespace WebApiLivraria.Data
         }
 
         public DbSet<Book> Books { get; set; }
+        public DbSet<UserPattherns> UserPattherns { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -24,8 +25,6 @@ namespace WebApiLivraria.Data
             builder.Entity<IdentityUserLogin<string>>().ToTable("RegistroLogins");
             builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
             builder.Entity<IdentityUserToken<string>>().ToTable("UsuarioTokens");
-
-           
         }
     }
 }

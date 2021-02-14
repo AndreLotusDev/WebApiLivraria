@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ModelsShared.Models;
 using System.Collections.Generic;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using WebApiLivraria.Helpers;
-using WebApiLivraria.Models;
 using WebApiLivraria.Repository;
 
 namespace WebApiLivraria.Controllers

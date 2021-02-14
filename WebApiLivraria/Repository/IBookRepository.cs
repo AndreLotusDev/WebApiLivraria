@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using ModelsShared.Models;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebApiLivraria.Models;
 
 namespace WebApiLivraria.Repository
 {

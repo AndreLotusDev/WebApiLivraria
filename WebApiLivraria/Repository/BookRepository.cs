@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using ModelsShared.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using WebApiLivraria.Data;
-using WebApiLivraria.Models;
 
 namespace WebApiLivraria.Repository
 {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using WebApiLivraria.Models;
+using ModelsShared.Models;
 
 namespace WebApiLivraria.Data
 {
