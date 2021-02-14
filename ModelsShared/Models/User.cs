@@ -1,8 +1,8 @@
 ﻿namespace ModelsShared.Models
 {
-    public class UserPattherns
+    public class User
     {
-        public int UserPatthernsId { get; set; }
+        public int UserId { get; set; }
         public string Name { get; set; }
         public string Password { get; set; }
         public string Role { get; set; }

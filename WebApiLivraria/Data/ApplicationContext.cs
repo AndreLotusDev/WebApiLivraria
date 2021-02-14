@@ -5,7 +5,7 @@ using ModelsShared.Models;
 
 namespace WebApiLivraria.Data
 {
-    public class ApplicationContext : IdentityDbContext<UsuarioContext, IdentityRole, string>
+    public class ApplicationContext : DbContext
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)
@@ -13,18 +13,16 @@ namespace WebApiLivraria.Data
         }
 
         public DbSet<Book> Books { get; set; }
-        public DbSet<UserPattherns> UserPattherns { get; set; }
+        public DbSet<User> User { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
-            builder.Entity<UsuarioContext>().ToTable("Usuarios");
-            builder.Entity<IdentityRole>().ToTable("Roles");
-            builder.Entity<IdentityUserRole<string>>().ToTable("UsuarioRoles");
-            builder.Entity<IdentityUserClaim<string>>().ToTable("UsuarioClaims");
-            builder.Entity<IdentityUserLogin<string>>().ToTable("RegistroLogins");
-            builder.Entity<IdentityRoleClaim<string>>().ToTable("RoleClaims");
-            builder.Entity<IdentityUserToken<string>>().ToTable("UsuarioTokens");
+
+            builder.Entity<User>().Property(p => p.Name).IsRequired();
+            builder.Entity<User>().Property(p => p.Password).IsRequired();
+
+            //Colocar que a role é obrigatoria
         }
     }
 }

@@ -13,10 +13,10 @@ namespace WebApiLivraria.Controllers
     {
         [HttpPost]
         [Route("login")]
-        public async Task<ActionResult<dynamic>> Authenticate([FromBody] UserPattherns model)
+        public async Task<ActionResult<dynamic>> Authenticate([FromBody] ModelsShared.Models.User model)
         {
             // Recupera o usuário
-            var user = UserPatthernsRepository.Get(model.Name, model.Password);
+            var user = Repository.UserRepository.Get(model.Name, model.Password);
 
             // Verifica se o usuário existe
             if (user == null)

@@ -6,7 +6,7 @@ namespace WebApiLivraria.Helpers
 {
     static public class HashTranslate
     {
-        static string sha256(string randomString)
+        static public string sha256(string randomString)
         {
             var crypt = new SHA256Managed();
             string hash = String.Empty;

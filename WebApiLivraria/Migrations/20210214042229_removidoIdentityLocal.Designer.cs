@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebApiLivraria.Data;
@@ -9,9 +10,10 @@ using WebApiLivraria.Data;
 namespace WebApiLivraria.Migrations
 {
     [DbContext(typeof(ApplicationContext))]
-    partial class ApplicationContextModelSnapshot : ModelSnapshot
+    [Migration("20210214042229_removidoIdentityLocal")]
+    partial class removidoIdentityLocal
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -61,27 +63,25 @@ namespace WebApiLivraria.Migrations
                     b.ToTable("Books");
                 });
 
-            modelBuilder.Entity("ModelsShared.Models.User", b =>
+            modelBuilder.Entity("ModelsShared.Models.UserPattherns", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("UserPatthernsId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Role")
                         .HasColumnType("text");
 
-                    b.HasKey("UserId");
+                    b.HasKey("UserPatthernsId");
 
-                    b.ToTable("User");
+                    b.ToTable("UserPattherns");
                 });
 #pragma warning restore 612, 618
         }
