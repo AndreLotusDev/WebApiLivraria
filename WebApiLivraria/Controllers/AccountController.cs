@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ModelsShared.Models;
 using System.Threading.Tasks;
-using WebApiLivraria.Data;
+using WebApiLivraria.BusinessLayer;
 using WebApiLivraria.Helpers;
 using WebApiLivraria.Repository;
 
@@ -11,26 +10,54 @@ namespace WebApiLivraria.Controllers
 {
     [Route("[controller]")]
     [AllowAnonymous]
-    public class AccountController : ControllerBase
+    public class AccountController : ControllerBase 
     {
-        private readonly IUnityOfWork _uof;
-
+        readonly AccountBusiness _accountBusiness;
         public AccountController(IUnityOfWork uof)
         {
-            _uof = uof;
+            _accountBusiness = new AccountBusiness(uof);
         }
 
         [HttpPost]
-        [Route("CreateAccount")]
-        public dynamic Create([FromBody] User user)
+        [Route("Create")]
+        public async Task<IActionResult> Create([FromBody] User user)
         {
-            user.Name = HashTranslate.sha256(user.Name);
-            user.Password = HashTranslate.sha256(user.Password);
-            _uof.UserRepository.Add(user);
 
-            _uof.Commit();
+            (int result, bool done, string message) = await _accountBusiness.AllowRegister(user);
 
-            return Ok();
+            ResultModel<User> resultModel = new ResultModel<User>();
+
+            if (done == true)
+            {
+                resultModel.SuccessMessage = "Usuário salvo com sucesso";
+                return Ok(resultModel);
+            }
+            else
+            {
+                resultModel.ErrorMessage = message;
+                return BadRequest(resultModel);
+            }
+        }
+
+        [HttpPost]
+        [Route("Login")]
+        public async Task<IActionResult> Login([FromBody] User user)
+        {
+
+            (int result, bool done, string message) = await _accountBusiness.FindByUser(user);
+
+            ResultModel<User> resultModel = new ResultModel<User>();
+
+            if (done == true)
+            {
+                resultModel.SuccessMessage = message;
+                return Ok(resultModel);
+            }
+            else
+            {
+                resultModel.ErrorMessage = message;
+                return BadRequest(resultModel);
+            }
         }
     }
 }

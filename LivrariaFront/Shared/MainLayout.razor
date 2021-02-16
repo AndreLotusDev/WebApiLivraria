@@ -1,17 +1,106 @@
 ﻿@inherits LayoutComponentBase
 
+<RadzenNotification />
+
+<style>
+    .sticky-top {
+        height: 50px;
+    }
+
+    .flexbox {
+        display: flex;
+        align-items: center;
+    }
+
+    button {
+        margin-left: 10px;
+        margin-right: 10px;
+    }
+
+    a {
+        color: white;
+    }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        a:hover {
+            background-color: rgba(34, 31, 31, 0.91);
+        }
+</style>
+
 <div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+    @*<div class="sidebar">
+            <NavMenu />
+        </div>*@
 
     <div class="main">
-        <div class="top-row px-4">
-            <a href="http://blazor.net" target="_blank" class="ml-md-auto">About</a>
-        </div>
+        <nav class="sticky-top border-bottom-3 col-12 flexbox navbar navbar-expand-lg">
 
-        <div class="content px-4">
+            <a class="navbar-brand" href="#">Menu</a>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+
+                    <li class="nav-item">
+                        <NavLink class="" href="">
+                            <a class="nav-link align-middle" aria-hidden="true">Home</a>
+                        </NavLink>
+                    </li>
+
+                    <li class="nav-item ">
+                        <NavLink class="" href="/LoginAccount">
+                            <a class="nav-link align-middle" aria-hidden="true">Login</a>
+                        </NavLink>
+                    </li>
+
+                    <li class="nav-item ">
+                        <NavLink class="" href="">
+                            <a class="nav-link align-middle" aria-hidden="true">Categorias</a>
+                        </NavLink>
+                    </li>
+
+                    <li class="nav-item ">
+                        <NavLink class="" href="">
+                            <a class="nav-link align-middle" aria-hidden="true">Mais baixados</a>
+                        </NavLink>
+                    </li>
+
+                    <li class="nav-item ">
+                        <NavLink class="" href="">
+                            <a class="nav-link align-middle" aria-hidden="true">Cadastrar o livro</a>
+                        </NavLink>
+                    </li>
+
+                    <li class="nav-item">
+                        <NavLink class="" href="/CreateAccount">
+                            <a class="nav-link align-middle" aria-hidden="true">Cadastrar</a>
+                        </NavLink>
+                    </li>
+                </ul>
+            </div>
+
+        </nav>
+
+        <div class="">
             @Body
         </div>
+
+        <footer class="">
+
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand" href="#">Rodapé</a>
+                <ul class="navbar-nav">
+
+                    <li class="nav-item">
+                        <NavLink class="" href="">
+                            <a class="nav-link align-middle" aria-hidden="true">Envie um e-mail</a>
+                        </NavLink>
+                    </li>
+                </ul>
+            </nav>
+
+        </footer>
     </div>
 </div>

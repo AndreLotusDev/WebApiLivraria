@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ModelsShared.Helpers;
 using ModelsShared.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using WebApiLivraria.Helpers;
 using WebApiLivraria.Repository;
 
 namespace WebApiLivraria.Controllers

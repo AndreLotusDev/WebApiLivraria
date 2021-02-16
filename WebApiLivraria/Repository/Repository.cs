@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -30,6 +31,16 @@ namespace WebApiLivraria.Repository
             return _context.Set<T>().AsNoTracking();
         }
 
+        public List<T> List()
+        {
+            return _context.Set<T>().ToList();
+        }
+
+        public IEnumerable<T> Numerable()
+        {
+            return _context.Set<T>().ToList();
+        }
+
         public T GetById(Expression<Func<T, bool>> predicate)
         {
             return _context.Set<T>().SingleOrDefault(predicate);
@@ -39,6 +50,8 @@ namespace WebApiLivraria.Repository
         {
             _context.Set<T>().Update(entity);
         }
+
+
 
         //Numero de rows afetadas, se salvou, mensagem de erro
         public async Task<(int, bool, string)> SaveAsync()

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
@@ -7,11 +7,30 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="5.0.3" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="5.0.3" PrivateAssets="all" />
+    <PackageReference Include="Radzen.Blazor" Version="3.0.10" />
     <PackageReference Include="System.Net.Http.Json" Version="5.0.0" />
+
+	  <Watch Include="..\LivrariaFront\**\*.razor"></Watch>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Pages\LoginAccount.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Watch Remove="Pages\LoginAccount.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ModelsShared\ModelsShared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Pages\LoginAccount.razor" />
   </ItemGroup>
 
 </Project>

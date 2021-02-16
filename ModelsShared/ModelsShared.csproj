@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helpers\HashTranslate.cs" />
+    <Compile Include="Helpers\ResultModel.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Categories.cs" />
     <Compile Include="Models\User.cs" />

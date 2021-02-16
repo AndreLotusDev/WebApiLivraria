@@ -1,0 +1,51 @@
+﻿@page "/LoginAccount"
+
+@using LivrariaFront.ViewModels;
+
+@inherits LoginAccountBase;
+
+<style>
+    .form-control {
+        display: inline-block;
+        width: 300px;
+        height: 24px;
+    }
+
+    .container {
+        width: 500px;
+    }
+
+    label {
+        display: block;
+    }
+</style>
+
+<div style="position: relative; height: 600px">
+    <div class="container text-center mt-2 card">
+
+        <h1>Area de login</h1>
+
+        <EditForm Model="@userTemp" OnSubmit="@SubmitForm">
+
+            <hr />
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <label form="name">Usuario/Nome: </label>
+                <InputText class="form-control" id="name" @bind-Value="userTemp.NameUser" placeholder="Nome" />
+
+            </div>
+
+            <div class="form-group">
+                <label form="password">Digite sua senha: </label>
+                <InputText class="form-control" id="password" @bind-Value="userTemp.Password" type="password" placeholder="Sua senha"></InputText>
+            </div>
+
+            <div class="row justify-content-center">
+                <button type="submit" class="btn btn-success mb-3">Logar</button>
+            </div>
+        </EditForm>
+    </div>
+</div>
+

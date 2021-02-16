@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApiLivraria", "WebApiLivraria\WebApiLivraria.csproj", "{8D050429-B1F8-4EB5-970A-FAC527CAC543}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LivrariaFront", "LivrariaFront\LivrariaFront.csproj", "{AF9B502D-02B0-4122-98AB-8FE248450120}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LivrariaFront", "LivrariaFront\LivrariaFront.csproj", "{AF9B502D-02B0-4122-98AB-8FE248450120}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModelsShared", "ModelsShared\ModelsShared.csproj", "{C1BFBF28-0CB4-4E15-8DDE-B47F4544DEE2}"
 EndProject

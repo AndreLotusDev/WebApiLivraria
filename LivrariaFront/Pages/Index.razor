@@ -11,7 +11,7 @@ Welcome to your new app.
 
 <SurveyPrompt Title="How is Blazor working for you?" />
 
-<button @onclick="CarregarProdutos">Get Books -</button>
+@*<button @onclick="CarregarProdutos">Get Books -</button>*@
 
 <ul>
 </ul>
@@ -19,7 +19,7 @@ Welcome to your new app.
 @code{
     protected async Task<List<Book>> CarregarProdutos()
     {
-        var url = Singleton.UrlApiBase + "/Book";
+        var url = http.BaseAddress.AbsoluteUri + "Book";
 
         var books = await http.GetFromJsonAsync<List<Book>>(url);
 
