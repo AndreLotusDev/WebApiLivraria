@@ -1,4 +1,5 @@
-﻿using ModelsShared.Models;
+﻿using ModelsShared.Helpers;
+using ModelsShared.Models;
 using System.Threading.Tasks;
 
 namespace WebApiLivraria.BusinessLayer
@@ -7,6 +8,6 @@ namespace WebApiLivraria.BusinessLayer
     {
         Task<(int, bool, string)> AllowRegister(User user);
 
-        Task<(int, bool, string)> FindByUser(User user);
+        Task<ResultModel<TokenInfo>> FindByUser(User user);
     }
 }

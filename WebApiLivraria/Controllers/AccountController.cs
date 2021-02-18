@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ModelsShared.Helpers;
 using ModelsShared.Models;
 using System.Threading.Tasks;
 using WebApiLivraria.BusinessLayer;
-using WebApiLivraria.Helpers;
 using WebApiLivraria.Repository;
 
 namespace WebApiLivraria.Controllers
@@ -41,22 +41,22 @@ namespace WebApiLivraria.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public async Task<IActionResult> Login([FromBody] User user)
+        public async Task<ActionResult<dynamic>> Authenticate([FromBody] User model)
         {
+            ResultModel<TokenInfo> resultModel;
 
-            (int result, bool done, string message) = await _accountBusiness.FindByUser(user);
+            // Recupera o usuário
+            resultModel = await _accountBusiness.FindByUser(model);
 
-            ResultModel<User> resultModel = new ResultModel<User>();
-
-            if (done == true)
+            // Verifica se o usuário existe
+            if (resultModel == null)
             {
-                resultModel.SuccessMessage = message;
-                return Ok(resultModel);
+                return NotFound(resultModel);
             }
             else
             {
-                resultModel.ErrorMessage = message;
-                return BadRequest(resultModel);
+                // Retorna os dados
+                return Ok(resultModel);
             }
         }
     }

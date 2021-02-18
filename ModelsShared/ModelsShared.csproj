@@ -45,6 +45,7 @@
     <Compile Include="Helpers\ResultModel.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\Categories.cs" />
+    <Compile Include="Models\TokenInfo.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

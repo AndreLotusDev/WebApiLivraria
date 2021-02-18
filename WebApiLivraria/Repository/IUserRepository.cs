@@ -5,6 +5,6 @@ namespace WebApiLivraria.Repository
 {
     public interface IUserRepository : IRepository<User>
     {
-        public Task<bool> UserIsInDb(User user);
+        public Task<(bool, User)> UserIsInDb(User user);
     }
 }

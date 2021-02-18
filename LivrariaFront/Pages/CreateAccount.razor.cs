@@ -49,7 +49,7 @@ namespace LivrariaFront.Pages
             else
             {
                 message.Detail = resultModel.SuccessMessage;
-                message.Severity = NotificationSeverity.Error;
+                message.Severity = NotificationSeverity.Success;
             }
 
             ShowNotification(message);

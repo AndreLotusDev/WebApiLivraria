@@ -1,40 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ModelsShared.Models;
 using System;
-using System.Threading.Tasks;
-using WebApiLivraria.Repository;
-using WebApiLivraria.Services;
 
 namespace WebApiLivraria.Controllers
 {
     [Route("[controller]")]
     public class UserController : ControllerBase
     {
-        [HttpPost]
-        [Route("login")]
-        public async Task<ActionResult<dynamic>> Authenticate([FromBody] ModelsShared.Models.User model)
-        {
-            // Recupera o usuário
-            var user = Repository.UserRepository.Get(model.Name, model.Password);
-
-            // Verifica se o usuário existe
-            if (user == null)
-                return NotFound(new { message = "Usuário ou senha inválidos" });
-
-            // Gera o Token
-            var token = TokenService.GenerateToken(user);
-
-            // Oculta a senha
-            user.Password = "";
-
-            // Retorna os dados
-            return new
-            {
-                user = user,
-                token = token
-            };
-        }
+        
 
         [HttpGet]
         [Route("anonymous")]

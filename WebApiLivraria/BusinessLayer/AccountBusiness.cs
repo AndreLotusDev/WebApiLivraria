@@ -1,8 +1,10 @@
-﻿using ModelsShared.Models;
+﻿using ModelsShared.Helpers;
+using ModelsShared.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
 using WebApiLivraria.Repository;
+using WebApiLivraria.Services;
 
 namespace WebApiLivraria.BusinessLayer
 {
@@ -51,20 +53,40 @@ namespace WebApiLivraria.BusinessLayer
             }
         }
 
-        public async Task<(int, bool, string)> FindByUser(User user)
+        public async Task<ResultModel<TokenInfo>> FindByUser(User user)
         {
+            ResultModel<TokenInfo> resultModel = new ResultModel<TokenInfo>();
+
             try
             {
-                bool gonaLogin = await _uof.UserRepository.UserIsInDb(user);
+                (bool gonaLogin, User userTemp) = await _uof.UserRepository.UserIsInDb(user);
 
                 if (gonaLogin)
-                    return (0, true, "Logado com sucesso");
+                {
+                    resultModel.Model = new TokenInfo();
+
+                    // Gera o Token
+                    var token = TokenService.GenerateToken(userTemp);
+
+                    // Oculta a senha
+                    userTemp.Password = "";
+
+                    resultModel.Model.User = userTemp;
+                    resultModel.Model.Token = token;
+
+                    resultModel.SuccessMessage = "Logado com sucesso";
+                    return resultModel;
+                }
                 else
-                    return (0, false, "Tentativas incorretas");
+                {
+                    resultModel.ErrorMessage = "Credenciais incorretas";
+                    return resultModel;
+                }
             }
             catch (Exception ex)
             {
-                return (0, false, ex.Message);
+                resultModel.ErrorMessage = "Erro interno, contatar o administrador";
+                return resultModel;
             }
             finally
             {

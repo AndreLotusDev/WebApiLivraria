@@ -1,4 +1,4 @@
-﻿@page "/LoginAccount"
+﻿@page "/Login"
 
 @using LivrariaFront.ViewModels;
 
@@ -32,13 +32,13 @@
             <ValidationSummary />
 
             <div class="form-group">
-                <label form="name">Usuario/Nome: </label>
-                <InputText class="form-control" id="name" @bind-Value="userTemp.NameUser" placeholder="Nome" />
+                <label form="NameUser">Usuario/Nome: </label>
+                <InputText class="form-control" id="nameUser" @bind-Value="userTemp.NameUser" placeholder="Nome" />
 
             </div>
 
             <div class="form-group">
-                <label form="password">Digite sua senha: </label>
+                <label form="Passwor">Digite sua senha: </label>
                 <InputText class="form-control" id="password" @bind-Value="userTemp.Password" type="password" placeholder="Sua senha"></InputText>
             </div>
 

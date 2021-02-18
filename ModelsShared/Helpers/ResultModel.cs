@@ -17,4 +17,12 @@ namespace ModelsShared.Helpers
         public string SuccessMessage { get; set; }
         public string ErrorMessage { get; set; }
     }
+
+    public class ResultModelList<T>
+    {
+        public List<T> Models { get; set; }
+        public string SuccessMessage { get; set; }
+        public string ErrorMessage { get; set; }
+    }
+
 }

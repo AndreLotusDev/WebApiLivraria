@@ -46,12 +46,6 @@ namespace WebApiLivraria
                 x.RequireHttpsMetadata = false;
                 x.SaveToken = true;
 
-                //Caso ele logue errado
-                //x.Events = new JwtBearerEvents 
-                //{ 
-                    
-                //}
-
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
@@ -78,8 +72,6 @@ namespace WebApiLivraria
 
             app.UseAuthorization();
             app.UseAuthentication();
-
-            app.UseCookiePolicy();
 
             app.UseEndpoints(endpoints =>
             {

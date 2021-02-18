@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using ModelsShared.Helpers;
 using ModelsShared.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using WebApiLivraria.Repository;
 
@@ -10,7 +11,6 @@ namespace WebApiLivraria.Controllers
 {
     [Route("[controller]")]
     [ApiController]
-    [AllowAnonymous]
     public class BookController : ControllerBase
     {
         private readonly IUnityOfWork _uof;
@@ -20,9 +20,16 @@ namespace WebApiLivraria.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<Book>> GetBook()
+        [Authorize]
+        public async Task<ActionResult> GetBook()
         {
-            return await _uof.BookRepository.GetAsync();
+            ResultModelList<Book> resultModel = new ResultModelList<Book>();
+
+            var allBooks = await _uof.BookRepository.GetAsync();
+
+            resultModel.Models = new List<Book>(allBooks);
+
+            return Ok(resultModel);
         }
 
         [Route("RegisterBook")]

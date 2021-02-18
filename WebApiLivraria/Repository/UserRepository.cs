@@ -22,9 +22,18 @@ namespace WebApiLivraria.Repository
             return users.Where(x => x.Name.ToLower() == username.ToLower() && x.Password == password.ToLower()).FirstOrDefault();
         }
 
-        public async Task<bool> UserIsInDb(User user)
+        public async Task<(bool, User)> UserIsInDb(User user)
         {
-            return await _context.User.AnyAsync(w => (w.Name == user.Name || w.Email == user.Name) && w.Password == user.Password);
+            User userCount = await _context.User.Where(w => (w.Name == user.Name || w.Email == user.Name) && w.Password == user.Password).FirstOrDefaultAsync();
+
+            if(userCount != null)
+            {
+                return (true, userCount);
+            }
+            else
+            {
+                return (false, null);
+            }
         }
     }
 }
