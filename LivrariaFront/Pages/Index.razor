@@ -5,24 +5,69 @@
 @using System.Text.Json;
 @using System.Text.Json.Serialization;
 
-<h1>Hello, world!</h1>
+<style>
+    .blocks {
+        display: inline-block;
+        width: 200px;
+        height: 200px;
+    }
 
-Welcome to your new app.
+    .flexBox {
+        display: flex;
+        align-items: center;
+        justify-content: center
+    }
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    .cut-image {
+        overflow: hidden;
+    }
 
-@*<button @onclick="CarregarProdutos">Get Books -</button>*@
+        .cut-image::after {
+        }
+</style>
 
-<ul>
-</ul>
+@if (booksTop10.Any())
+{
+    <div class="row flexBox">
+        <div class="pt-3">
+            <h3>Top 10 livros mais acessados</h3>
+        </div>
+    </div>
+    <hr />
+
+    <br />
+
+    <div class="row flexBox">
+        @foreach (var book in booksTop10)
+        {
+            if (booksTop10.IndexOf(book) == 5)
+            {
+                <div class="w-100"></div>
+            }
+            <div class="blocks card ml-3 mr-3 mb-3 col-2 cut-image flexBox">
+                <img src="@book.ImageUrl" style="width: 250px; height: 250px;" />
+            </div>
+        }
+    </div>
+}
+
+<br />
+<br />
+
+
 
 @code{
-    protected async Task<List<Book>> CarregarProdutos()
+    private List<Book> booksTop10 = new List<Book>();
+
+    protected override async Task OnInitializedAsync()
     {
-        var url = http.BaseAddress.AbsoluteUri + "Book";
+        var response = await http.GetAsync(http.BaseAddress.AbsoluteUri + "Book/GetTopBooks");
 
-        var books = await http.GetFromJsonAsync<List<Book>>(url);
+        var resultModel = await response.Content.ReadFromJsonAsync<ResultModelList<Book>>();
 
-        return books;
+        foreach (var model in resultModel.Models)
+        {
+            booksTop10.Add(model);
+        }
     }
 }

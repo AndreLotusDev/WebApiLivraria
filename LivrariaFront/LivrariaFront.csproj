@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
-
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
@@ -13,12 +12,26 @@
 	  <Watch Include="..\LivrariaFront\**\*.razor"></Watch>
   </ItemGroup>
 
+	<ItemGroup>
+		<None Include="Components\AdminArea\Dashboards.razor" />
+		<None Include="Components\AdminArea\DeleteBook.razor" />
+		<None Include="Components\AdminArea\NewCategory.razor" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Pages\AdminArea.razor.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Pages\AdminArea.razor.css" />
+  </ItemGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\ModelsShared\ModelsShared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Class\" />
     <Folder Include="Helpers\" />
   </ItemGroup>
-
 </Project>

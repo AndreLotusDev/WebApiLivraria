@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using ModelsShared.Helpers;
 using ModelsShared.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using WebApiLivraria.Repository;
 
@@ -20,7 +19,6 @@ namespace WebApiLivraria.Controllers
         }
 
         [HttpGet]
-        [Authorize]
         public async Task<ActionResult> GetBook()
         {
             ResultModelList<Book> resultModel = new ResultModelList<Book>();
@@ -28,6 +26,28 @@ namespace WebApiLivraria.Controllers
             var allBooks = await _uof.BookRepository.GetAsync();
 
             resultModel.Models = new List<Book>(allBooks);
+
+            return Ok(resultModel);
+        }
+
+        [HttpGet]
+        [Route("GetTopBooks")]
+        public async Task<ActionResult> GetTopBooks()
+        {
+            ResultModelList<Book> resultModel = new ResultModelList<Book>();
+
+            var allBooks = await _uof.BookRepository.GetAsync();
+
+            resultModel.Models = new List<Book>(allBooks);
+
+            if(resultModel.Models != null)
+            {
+                resultModel.SuccessMessage = "Operação concluída com sucesso";
+            }
+            else
+            {
+                resultModel.ErrorMessage = "Não encontramos nenhum livro";
+            }
 
             return Ok(resultModel);
         }

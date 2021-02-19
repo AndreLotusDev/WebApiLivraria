@@ -1,0 +1,46 @@
+﻿@page "/AdminArea"
+
+@inherits AdminAreaBase;
+@using LivrariaFront.Components.AdminArea
+
+<style>
+   
+</style>
+
+<div style="height: 500px;">
+    <h1 class="text-center pt-3">Área de administração</h1>
+
+    <div class="container card">
+        <nav class="navbar navbar-expand-lg">
+            <a class="navbar-brand" href="#">Funções: </a>
+            <ul class="navbar-nav">
+
+                <li class="nav-item">
+                    <a class="nav-link align-middle" aria-hidden="true" @onclick="LoadRegisterBooksArea">Cadastrar livros</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link align-middle" aria-hidden="true" @onclick="LoadDeleteBook">Deletar livros</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link align-middle" aria-hidden="true" @onclick="LoadNewCategory">Cadastrar nova categoria</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link align-middle" aria-hidden="true" @onclick="LoadDashBoard">Dashboards</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <hr />
+
+    <AddBook Active="bookState"></AddBook>
+
+    <Dashboards Active="dashBoard"></Dashboards>
+
+    <DeleteBook Active="deleteBook"></DeleteBook>
+
+    <NewCategory Active="newCategory"></NewCategory>
+</div>

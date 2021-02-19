@@ -6,6 +6,7 @@ namespace WebApiLivraria.Repository
     {
         IBookRepository BookRepository { get; }
         IUserRepository UserRepository { get; }
+        ICategories CategoriesRepository { get; }
 
         void Commit();
 

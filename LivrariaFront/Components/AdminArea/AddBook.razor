@@ -1,0 +1,126 @@
+﻿@using LivrariaFront.ViewModels
+
+@inject HttpClient http
+@inject NotificationService notificationService
+
+@if (Active == true)
+{
+    <div class="row card-footer" style="background-color: rgba(29, 27, 27, 0.95)">
+        <h1 class="text-center">Cadastre um livro</h1>
+    </div>
+
+    <div class="card-body" style="position: relative; min-height: 100%">
+        <EditForm Model="@bookFormModel" OnValidSubmit="@RegisterTheBook">
+
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="form-group">
+                <div class="col-5">
+                    <label form="NameUser">Título: </label>
+                    <InputText id="Title" class="form-control" @bind-Value="bookFormModel.Title" />
+
+                    <label form="NameUser">Autor: </label>
+                    <InputText id="Author" class="form-control" @bind-Value="bookFormModel.Author" />
+
+                    <label form="Description">Descrição: </label>
+                    <InputTextArea id="Description" class="form-control" @bind-Value="bookFormModel.Description" />
+
+                    <label form="FileUrl">Endereço de arquivo: </label>
+                    <InputText id="FileUrl" class="form-control" @bind-Value="bookFormModel.FileUrl" />
+
+                    <label form="ImageUrl">Endereço da imagem: </label>
+                    <InputText id="ImageUrl" class="form-control" @bind-Value="bookFormModel.ImageUrl" />
+
+                    <label form="Pages">Páginas: </label>
+                    <InputNumber id="Pages" class="form-control" @bind-Value="bookFormModel.Pages"></InputNumber>
+
+                    <label form="Publisher">Editora: </label>
+                    <InputText id="Publisher" class="form-control" @bind-Value="bookFormModel.Publisher" />
+
+                    <label form="Year">Ano: </label>
+                    <InputNumber id="Year" class="form-control" @bind-Value="bookFormModel.Year"></InputNumber>
+
+                    @* SELECT ITEMS *@
+                    @if(categories.Models.Any())
+                    {
+                        foreach (var item in )
+                        {
+
+                        }
+                    }
+
+                    <button type="submit" class="mb-5 mt-5 btn btn-success">Cadastrar livro</button>
+                </div>
+            </div>
+        </EditForm>
+    </div>
+}
+
+@code {
+    [Parameter] public bool Active { get; set; }
+
+    private BookFormModel bookFormModel = new BookFormModel();
+    private EditContext editContext;
+    private ResultModelList<Categories> categories = new ResultModelList<Categories>();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        editContext = new EditContext(bookFormModel);
+
+        var response = await http.GetAsync(http.BaseAddress.AbsoluteUri + "Categories/GetCategories");
+
+        var resultModel = await response.Content.ReadFromJsonAsync<ResultModelList<Categories>>();
+
+        if(resultModel.Models.Any())
+        {
+            foreach (var item in resultModel.Models)
+            {
+                categories.Models.Add(item);
+            }
+        }
+    }
+
+    protected void ShowNotification(NotificationMessage message)
+    {
+        notificationService.Notify(message);
+    }
+
+
+    private async Task RegisterTheBook()
+    {
+        Book bookTemp = new Book() {
+            Author = bookFormModel.Author,
+            Description = bookFormModel.Description,
+            Categories = bookFormModel.Categories,
+            Year = bookFormModel.Year,
+            Title = bookFormModel.Title,
+            Pages = bookFormModel.Pages,
+            FileUrl = bookFormModel.FileUrl,
+            ImageUrl = bookFormModel.ImageUrl,
+            Publisher = bookFormModel.Publisher
+        };
+
+        var response = await http.PostAsJsonAsync<Book>(http.BaseAddress.AbsoluteUri + "Book/RegisterBook", bookTemp);
+
+        var resultModel = await response.Content.ReadFromJsonAsync<ResultModel<TokenInfo>>();
+
+        NotificationMessage notificationMessage = new NotificationMessage();
+
+        if (string.IsNullOrEmpty(resultModel.ErrorMessage))
+        {
+            notificationMessage.Detail = resultModel.SuccessMessage;
+            notificationMessage.Severity = NotificationSeverity.Success;
+            ShowNotification(notificationMessage);
+        }
+        else
+        {
+            notificationMessage.Severity = NotificationSeverity.Error;
+            notificationMessage.Detail = resultModel.ErrorMessage;
+            ShowNotification(notificationMessage);
+        }
+
+
+    }
+}

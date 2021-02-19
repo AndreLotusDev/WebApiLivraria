@@ -19,5 +19,10 @@ namespace WebApiLivraria.Repository
         {
             return await _context.Books.ToListAsync();
         }
+
+        public async Task<IEnumerable<Book>> GetTopBooks()
+        {
+            return await _context.Books.Take(10).ToListAsync();
+        }
     }
 }
